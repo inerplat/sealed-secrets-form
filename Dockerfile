@@ -1,12 +1,13 @@
 FROM node:20.12 as builder
 
 WORKDIR /work
-COPY package.json package.lock.json ./
+COPY package.json package-lock.json ./
 RUN npm i --force
 
 COPY . .
 
-RUN react-scripts build
+ENV NODE_OPTIONS="--openssl-legacy-provider"
+RUN npm run build
 
 FROM nginx:1.25
 
